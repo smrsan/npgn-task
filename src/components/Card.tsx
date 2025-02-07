@@ -13,9 +13,9 @@ const Card = ({ employee: emp }: CardProps) => {
         src={emp.profile_image || "/images/256.png"}
       />
       <div className="p-2">
-        <div className="flex flex-row">
+        <div className="flex flex-row items-center">
           <h3 className="text-lg grow">{emp.employee_name}</h3>
-          <h3 className="text-lg">{emp.employee_age}</h3>
+          <h3 className="text-sm">Age: {emp.employee_age}</h3>
         </div>
         <h5 className="text-gray-400">
           ${emp.employee_salary.toLocaleString()}
