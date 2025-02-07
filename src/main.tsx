@@ -7,7 +7,9 @@ import App from "./App.tsx";
 
 if (import.meta.env.MODE === "development") {
   const { worker } = await import("./mock/server.ts");
-  await worker.start();
+  await worker.start({
+    onUnhandledRequest: "bypass",
+  });
 }
 
 createRoot(document.getElementById("root")!).render(
