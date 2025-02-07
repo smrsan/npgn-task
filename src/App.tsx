@@ -5,10 +5,12 @@ import SearchBox from "./components/SearchBox";
 import CardList from "./components/CardList";
 import Card from "./components/Card";
 import CardSkeleton from "./components/CardSkeleton";
+import useIsMounted from "./hooks/useIsMounted";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [employeeList, setEmployeeList] = useState<IEmployeeData[]>([]);
+  const isMountedRef = useIsMounted();
 
   const fetchEmployeesData = useCallback(async () => {
     setIsLoading(true);
@@ -20,9 +22,11 @@ function App() {
     });
     const data = (await resp.json())?.data;
 
+    if (isMountedRef.current === false) return;
+
     setIsLoading(false);
     setEmployeeList(data);
-  }, []);
+  }, [isMountedRef]);
 
   useEffect(() => {
     fetchEmployeesData();
