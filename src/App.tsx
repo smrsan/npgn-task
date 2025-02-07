@@ -21,6 +21,7 @@ function App() {
   const fetchEmployeesData = useCallback(async () => {
     setIsLoading(true);
 
+    // Artificial delay
     await new Promise((r) => setTimeout(r, 1000));
 
     const resp = await fetch(`${SERVER_URL}/api/v1/employees`, {
