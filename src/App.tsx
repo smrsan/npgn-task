@@ -1,5 +1,5 @@
 import { type IEmployeeData } from "./types/general";
-import { useCallback, useEffect, useState } from "react";
+import { ChangeEventHandler, useCallback, useEffect, useState } from "react";
 import { SERVER_URL } from "./constants";
 import SearchBox from "./components/SearchBox";
 import CardList from "./components/CardList";
@@ -10,6 +10,7 @@ import useIsMounted from "./hooks/useIsMounted";
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [employeeList, setEmployeeList] = useState<IEmployeeData[]>([]);
+  const [filteredList, setFilteredList] = useState<IEmployeeData[]>([]);
   const isMountedRef = useIsMounted();
 
   const fetchEmployeesData = useCallback(async () => {
@@ -26,7 +27,26 @@ function App() {
 
     setIsLoading(false);
     setEmployeeList(data);
+    setFilteredList(data);
   }, [isMountedRef]);
+
+  const handleSearchChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    (event) => {
+      const searchText = event.target.value.toLowerCase().trim();
+
+      if (searchText === "") {
+        setFilteredList(employeeList);
+        return;
+      }
+
+      setFilteredList(
+        employeeList.filter((emp) => {
+          return emp.employee_name.toLowerCase().includes(searchText);
+        })
+      );
+    },
+    [employeeList]
+  );
 
   useEffect(() => {
     fetchEmployeesData();
@@ -35,11 +55,11 @@ function App() {
 
   return (
     <div className="p-2 sm:px-8 md:px-12 lg:max-w-[80vw] mx-auto">
-      <SearchBox />
+      <SearchBox onChange={handleSearchChange} />
       <CardList>
         {isLoading
           ? Array.from({ length: 10 }).map((_, i) => <CardSkeleton key={i} />)
-          : employeeList.map((emp) => <Card key={emp.id} employee={emp} />)}
+          : filteredList.map((emp) => <Card key={emp.id} employee={emp} />)}
       </CardList>
     </div>
   );
