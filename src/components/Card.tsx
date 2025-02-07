@@ -8,7 +8,7 @@ const Card = ({ employee: emp }: CardProps) => {
   return (
     <div className="shadow rounded-md overflow-hidden max-w-2xl">
       <img
-        className="w-full h-auto"
+        className="w-full h-auto aspect-square bg-gray-200"
         alt={emp.employee_name}
         src={emp.profile_image || "/images/256.png"}
       />
