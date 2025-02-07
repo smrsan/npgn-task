@@ -24,3 +24,25 @@ a:hover {
   color: #535bf2;
 }
 
+@layer components {
+  .btn {
+    @apply font-bold py-2 px-4 rounded bg-blue-500 text-white cursor-pointer;
+  }
+  .btn:hover {
+    @apply bg-blue-600;
+  }
+  .btn:active {
+    @apply bg-blue-700;
+  }
+
+  .btn-outlined {
+    @apply font-bold py-2 px-4 rounded border-2 border-blue-500 text-blue-500 cursor-pointer;
+  }
+  .btn-outlined:hover {
+    @apply bg-blue-500/25 text-white;
+  }
+  .btn-outlined:active {
+    @apply bg-blue-500/50;
+  }
+}
+
