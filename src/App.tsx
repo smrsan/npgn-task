@@ -37,10 +37,9 @@ function App() {
     <div className="p-2 sm:px-8 md:px-12 lg:max-w-[80vw] mx-auto">
       <SearchBox />
       <CardList>
-        {isLoading &&
-          Array.from({ length: 10 }).map((_, i) => <CardSkeleton key={i} />)}
-        {!isLoading &&
-          employeeList.map((emp) => <Card key={emp.id} employee={emp} />)}
+        {isLoading
+          ? Array.from({ length: 10 }).map((_, i) => <CardSkeleton key={i} />)
+          : employeeList.map((emp) => <Card key={emp.id} employee={emp} />)}
       </CardList>
     </div>
   );
